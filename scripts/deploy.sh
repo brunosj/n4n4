@@ -87,4 +87,11 @@ fi
 
 "$PM2_BIN" save
 
+# Reload/start can race or leave no process if the app exits immediately; ensure it exists.
+if ! "$PM2_BIN" describe "$PM2_NAME" >/dev/null 2>&1; then
+  echo "==> PM2: process $PM2_NAME not registered; starting"
+  "$PM2_BIN" start ecosystem.config.cjs --env production --only "$PM2_NAME" --update-env
+  "$PM2_BIN" save
+fi
+
 echo "==> Done: $PM2_NAME listening on port $PORT"

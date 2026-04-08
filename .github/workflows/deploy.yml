@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      BASE_PATH: /home/lando/n4n4
 
     steps:
       - name: Setup SSH
@@ -21,8 +23,6 @@ jobs:
         env:
           HOST: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
-          # Git clone root on the server (not a parent with a nested repo/)
-          BASE_PATH: /home/lando/n4n4
           PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
         run: |
           set -e
@@ -60,16 +60,38 @@ jobs:
         run: |
           echo "🔍 Verifying deployment..."
           ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR ${{ env.USERNAME }}@${{ env.HOST }} "
+            set -e
+            # Same defaults as scripts/deploy.sh so we query the same PM2 daemon as deploy.
+            NODE_BIN=\"\${NODE_BIN:-/home/lando/.nvm/versions/node/v22.22.2/bin/node}\"
+            PNPM_BIN=\"\${PNPM_BIN:-/home/lando/.local/share/pnpm/pnpm}\"
+            PM2_BIN=\"\${PM2_BIN:-/home/lando/.local/share/pnpm/pm2}\"
+            export PATH=\"\$(dirname \"\$NODE_BIN\"):\$(dirname \"\$PNPM_BIN\"):\$PATH\"
+            export NODE_BIN
+            export PORT=\"\${PORT:-4322}\"
+
             echo '📊 PM2 process check: n4n4'
-            if ! pm2 describe n4n4 > /dev/null 2>&1; then
-              echo '❌ PM2 process n4n4 not found'
+            if ! \"\$PM2_BIN\" describe n4n4 > /dev/null 2>&1; then
+              echo '⚠️ PM2 process n4n4 not found; starting from ecosystem (same as deploy)...'
+              cd '${{ env.BASE_PATH }}'
+              if [ -f .env ] && [ -r .env ]; then
+                set -a
+                # shellcheck disable=SC1091
+                . ./.env
+                set +a
+              fi
+              \"\$PM2_BIN\" start ecosystem.config.cjs --env production --only n4n4 --update-env
+              \"\$PM2_BIN\" save
+            fi
+
+            if ! \"\$PM2_BIN\" describe n4n4 > /dev/null 2>&1; then
+              echo '❌ PM2 process n4n4 still not found after start'
               exit 1
             fi
 
             # Same default port as scripts/deploy.sh / ecosystem.config.cjs
-            echo '🏥 Health check on :4322'
-            curl -sf http://localhost:4322 > /dev/null
-            echo '✅ App responding on port 4322'
+            echo \"🏥 Health check on :\${PORT}\"
+            curl -sf \"http://localhost:\${PORT}\" > /dev/null
+            echo '✅ App responding on port '\${PORT}
           "
 
   notify:
