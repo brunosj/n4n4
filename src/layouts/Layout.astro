@@ -4,9 +4,30 @@ import '../styles/global.css';
 export interface Props {
   title: string;
   description?: string;
+  /** Absolute URL for og:image / twitter:image */
+  image?: string;
+  imageAlt?: string;
+  ogType?: string;
+  /** og:site_name; defaults to title when omitted */
+  siteName?: string;
 }
 
-const { title, description } = Astro.props;
+const {
+  title,
+  description,
+  image,
+  imageAlt,
+  ogType = 'website',
+  siteName,
+} = Astro.props;
+
+const canonical =
+  Astro.site != null
+    ? new URL(Astro.url.pathname, Astro.site).href
+    : Astro.url.href;
+
+const resolvedSiteName = siteName ?? title;
+const twitterCard = image ? 'summary_large_image' : 'summary';
 ---
 
 <!doctype html>
@@ -16,6 +37,23 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     {description ? <meta name="description" content={description} /> : null}
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:title" content={title} />
+    {description ? <meta property="og:description" content={description} /> : null}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={resolvedSiteName} />
+    <meta property="og:locale" content="en_US" />
+    {image ? <meta property="og:image" content={image} /> : null}
+    {image && imageAlt ? <meta property="og:image:alt" content={imageAlt} /> : null}
+
+    <meta name="twitter:card" content={twitterCard} />
+    <meta name="twitter:title" content={title} />
+    {description ? <meta name="twitter:description" content={description} /> : null}
+    {image ? <meta name="twitter:image" content={image} /> : null}
+    {image && imageAlt ? <meta name="twitter:image:alt" content={imageAlt} /> : null}
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link
       rel="preload"

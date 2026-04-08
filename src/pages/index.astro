@@ -2,10 +2,15 @@
 export const prerender = false;
 
 import Layout from '../layouts/Layout.astro';
+import { toAbsoluteUrl } from '../lib/absolute-url';
 import { extractIframeSrc, getIframeEmbed } from '../lib/embed-iframe';
 import { loadSiteLive } from '../lib/load-live-content';
 
 const site = await loadSiteLive();
+
+const ogImageUrl = toAbsoluteUrl('/images/n4n4_artwork.jpg', Astro.site);
+const ogImageAlt =
+  'N4N4 artwork: grainy, low-fi image of a figure with head in hand, with red distorted text reading N4N4.';
 const album = getIframeEmbed(site.albumIframe);
 const videoEmbed = getIframeEmbed(site.video.videoIframe);
 
@@ -38,7 +43,12 @@ const heroBgStyle = bgUrl
   : undefined;
 ---
 
-<Layout title={site.title} description={site.description}>
+<Layout
+  title={site.title}
+  description={site.description}
+  image={ogImageUrl}
+  imageAlt={ogImageAlt}
+>
   <div class="home">
     <section class="home__stage" aria-label="Introduction" style={heroBgStyle}>
       {

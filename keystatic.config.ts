@@ -16,7 +16,7 @@ export default config({
         title: fields.text({ label: 'Title' }),
         description: fields.text({
           label: 'Description',
-          description: 'Shown on the page and in meta description.',
+          description: 'Shown in meta description (SEO).',
           multiline: true,
         }),
         logo: fields.image({
@@ -59,7 +59,8 @@ export default config({
         ),
         contact: fields.markdoc({
           label: 'Contact',
-          description: 'Rich text for the contact section below the main content.',
+          description:
+            'Rich text for the contact section below the main content.',
         }),
       },
     }),
