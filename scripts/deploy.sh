@@ -25,7 +25,7 @@ export NODE_BIN
 
 GIT_REMOTE="${GIT_REMOTE:-origin}"
 GIT_BRANCH="${GIT_BRANCH:-}"
-PM2_NAME='mef-website'
+PM2_NAME='n4n4'
 export PORT="${PORT:-4322}"
 export NODE_ENV=production
 

@@ -5,7 +5,7 @@
 module.exports = {
   apps: [
     {
-      name: 'mef-website',
+      name: 'n4n4',
       cwd: __dirname,
       script: 'dist/server/entry.mjs',
       interpreter: process.env.NODE_BIN || 'node',

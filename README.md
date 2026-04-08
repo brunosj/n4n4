@@ -23,21 +23,21 @@ This repo includes a `pnpm-lock.yaml`; other package managers work if you prefer
 
 ## Scripts
 
-| Command        | Description                    |
-| -------------- | ------------------------------ |
-| `pnpm dev`     | Dev server with hot reload     |
-| `pnpm build`   | Production build to `dist/`    |
-| `pnpm preview` | Preview the production build   |
+| Command        | Description                  |
+| -------------- | ---------------------------- |
+| `pnpm dev`     | Dev server with hot reload   |
+| `pnpm build`   | Production build to `dist/`  |
+| `pnpm preview` | Preview the production build |
 
 ## Local URLs (dev)
 
-- **Site:** [http://127.0.0.1:4321](http://127.0.0.1:4321)
-- **Keystatic admin:** [http://127.0.0.1:4321/keystatic](http://127.0.0.1:4321/keystatic)
+- **Site:** [http://127.0.0.1:4322](http://127.0.0.1:4322)
+- **Keystatic admin:** [http://127.0.0.1:4322/keystatic](http://127.0.0.1:4322/keystatic)
 
 ## Site structure
 
-| Route | Purpose |
-| ----- | ------- |
+| Route | Purpose                                                                                                                 |
+| ----- | ----------------------------------------------------------------------------------------------------------------------- |
 | `/`   | Full-page home: background, logo, title, press, album embed, **Video** (thumbnail + iframe), **Contact** (Markdoc HTML) |
 
 `Layout.astro` is a thin shell (meta, font preload, main slot)—no separate header/footer components.

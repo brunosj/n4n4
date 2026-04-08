@@ -1,0 +1,85 @@
+name: Deploy N4N4
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+      - name: Execute deployment script
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          # Git clone root on the server (not a parent with a nested repo/)
+          BASE_PATH: /home/lando/n4n4
+          PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+        run: |
+          set -e
+          echo "🚀 Starting deployment of $PROJECT_NAME..."
+          ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR ${{ env.USERNAME }}@${{ env.HOST }} "
+            set -e
+            
+            if [ ! -d '${{ env.BASE_PATH }}' ]; then
+              echo '❌ Repo directory not found!'
+              exit 1
+            fi
+            
+            cd '${{ env.BASE_PATH }}'
+            
+            if [ ! -f 'scripts/deploy.sh' ]; then
+              echo '❌ Deploy script not found!'
+              exit 1
+            fi
+            
+            bash scripts/deploy.sh
+          "
+          EXIT_STATUS=$?
+          if [ $EXIT_STATUS -eq 0 ]; then
+            echo "✅ Deployment completed successfully"
+          else
+            echo "❌ Deployment failed with exit status $EXIT_STATUS"
+          fi
+          exit $EXIT_STATUS
+
+      - name: Verify deployment
+        if: success()
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+        run: |
+          echo "🔍 Verifying deployment..."
+          ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR ${{ env.USERNAME }}@${{ env.HOST }} "
+            echo '📊 PM2 process check: n4n4'
+            if ! pm2 describe n4n4 > /dev/null 2>&1; then
+              echo '❌ PM2 process n4n4 not found'
+              exit 1
+            fi
+
+            # Same default port as scripts/deploy.sh / ecosystem.config.cjs
+            echo '🏥 Health check on :4322'
+            curl -sf http://localhost:4322 > /dev/null
+            echo '✅ App responding on port 4322'
+          "
+
+  notify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: failure()
+
+    steps:
+      - name: Notify via Resend
+        uses: brunosj/actions/resend-notify@v1
+        with:
+          subject: 'GitHub Actions - Deploy ${{ secrets.PROJECT_NAME }} Failed'
+          resend_api_key: ${{ secrets.RESEND_API_KEY }}
