@@ -1,0 +1,71 @@
+---
+import type { IframeEmbed } from '../../lib/embed-iframe';
+
+interface Props {
+  videoThumb: string;
+  videoEmbed: IframeEmbed | null;
+  useVideoPoster: boolean;
+  videoLazySrc: string | null;
+  videoLazyHtmlB64: string | null;
+}
+
+const { videoThumb, videoEmbed, useVideoPoster, videoLazySrc, videoLazyHtmlB64 } =
+  Astro.props;
+---
+
+{
+  videoThumb || videoEmbed ? (
+    <section class="home__video-stack" aria-label="Video">
+      <div class="home__video-shell">
+        <div class="home__video">
+          {useVideoPoster ? (
+            <div
+              class="home__video-lazy"
+              data-video-src={videoLazySrc ?? undefined}
+              data-video-html={videoLazyHtmlB64 ?? undefined}
+            >
+              <button type="button" class="home__video-poster" aria-label="Play video">
+                <img
+                  class="home__video-poster-img"
+                  src={videoThumb}
+                  alt=""
+                  width="1280"
+                  height="720"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="home__video-poster-play" aria-hidden="true">
+                  <img src="/play.svg" alt="" width="80" height="80" />
+                </span>
+              </button>
+              <div class="home__video-slot home__video-wrap" hidden />
+            </div>
+          ) : videoEmbed?.kind === 'src' ? (
+            <div class="home__video-wrap">
+              <iframe
+                class="home__video-iframe"
+                src={videoEmbed.src}
+                title="Video"
+                width="100%"
+                height="344"
+                loading="lazy"
+                allow="encrypted-media; fullscreen; autoplay; clipboard-write; picture-in-picture"
+                referrerpolicy="strict-origin-when-cross-origin"
+              />
+            </div>
+          ) : videoEmbed?.kind === 'html' ? (
+            <div class="home__video-html" set:html={videoEmbed.html} />
+          ) : videoThumb ? (
+            <img
+              class="home__video-thumb"
+              src={videoThumb}
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          ) : null}
+        </div>
+      </div>
+    </section>
+  ) : null
+}

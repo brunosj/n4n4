@@ -1,0 +1,30 @@
+---
+import type { IframeEmbed } from '../../lib/embed-iframe';
+
+interface Props {
+  album: IframeEmbed | null;
+}
+
+const { album } = Astro.props;
+---
+
+<div class="home__foreground">
+  {
+    album?.kind === 'src' ? (
+      <div class="home__album-wrap">
+        <iframe
+          class="home__album"
+          src={album.src}
+          title="Album player"
+          width="100%"
+          height="344"
+          loading="lazy"
+          allow="encrypted-media; fullscreen; autoplay; clipboard-write"
+          referrerpolicy="strict-origin-when-cross-origin"
+        />
+      </div>
+    ) : album?.kind === 'html' ? (
+      <div class="home__album-html" set:html={album.html} />
+    ) : null
+  }
+</div>

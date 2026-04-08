@@ -101,7 +101,7 @@ You can also edit **`index.mdoc` directly** in the editor; Keystatic will read t
 1. Update **`keystatic.config.ts`** (`fields.*` on the `site` singleton).
 2. Update **`siteFrontmatterSchema`** in **`src/lib/content-schemas.ts`** and the **`site`** collection schema in **`src/content.config.ts`** if needed.
 3. Run **`pnpm astro sync`** so types under `.astro/` stay current.
-4. Update **`src/pages/index.astro`** (and any related styles) if you added new data to display.
+4. Update **`src/pages/index.astro`** (data wiring) and **`src/components/home/`** (markup + **`home.css`**) if you added new data to display.
 
 ## Further reading
 

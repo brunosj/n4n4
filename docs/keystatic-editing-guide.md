@@ -34,7 +34,7 @@ You should see the Keystatic dashboard with **Site** as the main (or only) conte
 | What you see in the admin | What it does on the site |
 |---------------------------|---------------------------|
 | **Title** | Main heading and browser tab title |
-| **Description** | Short intro under the title; also used for search-engine description |
+| **Description** | Used for the HTML **meta description** (search / link previews); not shown as body copy on the page unless you add it in the theme |
 | **Logo** | Large logo near the top of the hero area (uploaded image) |
 | **Background picture** | Full-screen photo behind the hero content |
 | **Press text** | Longer text block; you can use line breaks |

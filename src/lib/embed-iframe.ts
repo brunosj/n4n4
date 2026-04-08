@@ -5,10 +5,12 @@ export function extractIframeSrc(html: string): string | null {
   return s || null;
 }
 
+export type IframeEmbed =
+  | { kind: 'src'; src: string }
+  | { kind: 'html'; html: string };
+
 /** Parse CMS iframe fields (album, video, etc.): bare URL or full `<iframe …>` HTML. */
-export function getIframeEmbed(
-  raw: string,
-): { kind: 'src'; src: string } | { kind: 'html'; html: string } | null {
+export function getIframeEmbed(raw: string): IframeEmbed | null {
   const t = raw.trim();
   if (!t) return null;
   if (/<iframe/i.test(t)) {

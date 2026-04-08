@@ -1,0 +1,78 @@
+---
+import './home.css';
+import HomeAlbum from './HomeAlbum.astro';
+import HomeContact from './HomeContact.astro';
+import HomeVideoLazyScript from './HomeVideoLazyScript.astro';
+import HomeVideoSection from './HomeVideoSection.astro';
+
+type Iframe = import('../../lib/embed-iframe').IframeEmbed;
+
+interface Props {
+  heroBgStyle: { backgroundImage?: string } | undefined;
+  logoUrl: string;
+  siteTitle: string;
+  press: string;
+  album: Iframe | null;
+  videoThumb: string;
+  videoEmbed: Iframe | null;
+  useVideoPoster: boolean;
+  videoLazySrc: string | null;
+  videoLazyHtmlB64: string | null;
+  contactHtml: string;
+}
+
+const {
+  heroBgStyle,
+  logoUrl,
+  siteTitle,
+  press,
+  album,
+  videoThumb,
+  videoEmbed,
+  useVideoPoster,
+  videoLazySrc,
+  videoLazyHtmlB64,
+  contactHtml,
+} = Astro.props;
+---
+
+<div class="home">
+  <section class="home__stage" aria-label="Introduction" style={heroBgStyle}>
+    {
+      logoUrl ? (
+        <div class="home__logo-wrap">
+          <img
+            class="home__logo"
+            src={logoUrl}
+            alt={siteTitle}
+            width="800"
+            height="400"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      ) : null
+    }
+    <div class="home__title-row">
+      <h1 class="home__title">{siteTitle}</h1>
+    </div>
+    {
+      press ? (
+        <div class="home__press-wrap">
+          <div class="home__press">{press}</div>
+        </div>
+      ) : null
+    }
+    <HomeAlbum album={album} />
+    <HomeVideoSection
+      videoThumb={videoThumb}
+      videoEmbed={videoEmbed}
+      useVideoPoster={useVideoPoster}
+      videoLazySrc={videoLazySrc}
+      videoLazyHtmlB64={videoLazyHtmlB64}
+    />
+  </section>
+  <HomeContact contactHtml={contactHtml} />
+</div>
+
+<HomeVideoLazyScript />

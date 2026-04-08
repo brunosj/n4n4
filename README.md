@@ -23,11 +23,12 @@ This repo includes a `pnpm-lock.yaml`; other package managers work if you prefer
 
 ## Scripts
 
-| Command        | Description                  |
-| -------------- | ---------------------------- |
-| `pnpm dev`     | Dev server with hot reload   |
-| `pnpm build`   | Production build to `dist/`  |
-| `pnpm preview` | Preview the production build |
+| Command        | Description                                      |
+| -------------- | ------------------------------------------------ |
+| `pnpm dev`     | Dev server with hot reload                       |
+| `pnpm build`   | Production build to `dist/`                      |
+| `pnpm preview` | Preview the production build                     |
+| `pnpm deploy`  | Runs `scripts/deploy.sh` (server deploy workflow) |
 
 ## Local URLs (dev)
 
@@ -40,31 +41,42 @@ This repo includes a `pnpm-lock.yaml`; other package managers work if you prefer
 | ----- | ----------------------------------------------------------------------------------------------------------------------- |
 | `/`   | Full-page home: background, logo, title, press, album embed, **Video** (thumbnail + iframe), **Contact** (Markdoc HTML) |
 
-`Layout.astro` is a thin shell (meta, font preload, main slot)—no separate header/footer components.
+`Layout.astro` is a thin shell (meta, canonical, Open Graph / Twitter cards, font preload, main slot)—no separate header/footer components.
 
 ## Project layout
 
 ```
 src/
+├── components/home/
+│   ├── HomePage.astro        # Composes hero stage + HomeAlbum + HomeVideoSection + HomeContact
+│   ├── HomeAlbum.astro
+│   ├── HomeVideoSection.astro
+│   ├── HomeContact.astro
+│   ├── HomeVideoLazyScript.astro
+│   └── home.css              # Home page layout & typography (BEM .home__*)
 ├── layouts/
 │   └── Layout.astro
 ├── pages/
-│   └── index.astro           # Home (SSR, loadSiteLive)
+│   └── index.astro           # SSR: loadSiteLive(), passes props into HomePage
 ├── lib/
 │   ├── load-live-content.ts  # Reads index.mdoc → frontmatter + contactHtml
 │   ├── content-schemas.ts    # Zod: siteFrontmatterSchema
-│   └── embed-iframe.ts       # Parses album / video embed URL or iframe HTML
+│   ├── embed-iframe.ts       # Parses album / video embed URL or iframe HTML
+│   ├── prepare-home-video.ts # Poster / lazy iframe helpers for the video block
+│   └── absolute-url.ts     # Absolute URLs for meta images (og:image)
 ├── content/
 │   └── site/
 │       └── index.mdoc        # Singleton: YAML frontmatter + Contact Markdoc body
 ├── styles/
 │   └── global.css
-content.config.ts             # Astro: single `site` collection (**/*.mdoc)
+├── content.config.ts         # Astro: single `site` collection (**/*.mdoc)
+└── middleware.ts             # Optional prod hooks (e.g. Keystatic auth)—see deploy notes
 keystatic.config.ts           # Keystatic: `site` singleton only
 astro.config.mjs
 public/
 ├── fonts/
 │   └── EurostileLTStd-Ex2.otf
+├── play.svg                  # Video poster play icon
 └── images/
     ├── logo/                 # Logo uploads (Keystatic)
     ├── site-background/      # Hero background uploads
@@ -83,4 +95,3 @@ Keystatic uses **`storage: { kind: 'local' }`**; commits to this repo are the so
 
 - **[docs/keystatic-cms.md](docs/keystatic-cms.md)** — technical wiring (loaders, SSR, field list)
 - **[docs/keystatic-editing-guide.md](docs/keystatic-editing-guide.md)** — short guide for non-developers
-- **[docs/info.md](docs/info.md)** — reference bio / press-style copy (not used by the CMS unless copied into Keystatic)

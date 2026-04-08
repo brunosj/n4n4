@@ -1,0 +1,13 @@
+---
+interface Props {
+  contactHtml: string;
+}
+
+const { contactHtml } = Astro.props;
+---
+
+<section class="home__contact" id="contact" aria-labelledby="contact-heading">
+  <div class="home__contact-inner">
+    <div class="home__contact-prose" set:html={contactHtml} />
+  </div>
+</section>
