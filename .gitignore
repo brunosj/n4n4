@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+
+# pnpm (local store if configured under the repo)
+.pnpm-store/
+
+# Build output (@astrojs/node standalone → dist/)
+dist/
+
+# Astro generated cache and types
+.astro/
+
+# Environment and secrets
+# Root `.env` is for VPS / PM2 (see scripts/deploy.sh); never commit.
+.env
+.env.*
+!.env.example
+vite-env/.env
+vite-env/.env.*
+!vite-env/.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# Optional: uncomment if you do not commit editor settings
+# .vscode/
+
+# Debug / test artifacts
+coverage/
+.nyc_output/
+*.tsbuildinfo

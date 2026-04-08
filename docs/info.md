@@ -1,0 +1,7 @@
+N4N4 [nana] ist Sehnsucht. Aus Zweifel, Schmerz, Liebe und der schonungslosen Realität erzählen seine Songs hoffnungsvolle Phantasien, in die wir uns träumen wollen.
+N4N4 bedient sich immer wieder Elementen des R&B, Indie und Bedroom Pop, in die er seine intime Klangwelt einarbeitet. Mit eingängigen Melodien, starkem Ausdruck und rauer Stimme erbaut er Welten, die zuvor nur im Kleinen an Klavier oder Gitarre entstehen.
+Als ein persönlicher Schicksalsschlag ihn zu radikalen Veränderung zwingt, fängt er an, seine Songs komplett anders zu schreiben. Als wären es Antworten auf den Kontrollverlust. Seine kindlichen Beobachtungen reißen immer wieder neue Welten auf. In poetischer, erfrischender Klarheit erklingen Geschichten, die unsere Sehnsucht zu stillen versuchen. Immer wieder aufs Neue.
+N4N4 ist Sänger und Songwriter.
+070 Shake, King Krule und Dijon zählen zu seinen Inspirationen.
+Live tritt N4N4 mit Band und einer Vielzahl an Instrumenten auf. Seine Debüt-EP erscheint im Mai 2026 und wurde durch eine Förderung der Musicboard Berlin GmbH unterstützt. Parallel entsteht derzeit seine zweite Platte in den Skydojo Studios. Live tritt N4N4 mit Band und einer Vielzahl an Instrumenten auf.
+N4N4 ist auf der Suche nach einem Management und Produktmanagement.

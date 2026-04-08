@@ -1,0 +1,117 @@
+@font-face {
+  font-family: 'Eurostile';
+  src: url('/fonts/EurostileLTStd-Ex2.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --color-bg: #f8f3d5;
+  --color-surface: #f8f3d5;
+  --color-text: #0c0c0c;
+  --color-text-muted: #3d3d3a;
+  --color-accent: #0c0c0c;
+  --color-accent-hover: #2a2a26;
+  --color-border: #0c0c0c;
+  --color-grid-line: rgba(12, 12, 12, 0.22);
+  --font-display: 'Eurostile', system-ui, sans-serif;
+  --font-body: 'Eurostile', system-ui, sans-serif;
+  --font-serif: 'Eurostile', system-ui, sans-serif;
+  --font-mono: 'Eurostile', system-ui, sans-serif;
+  --space-xs: 0.35rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4.5rem;
+  --space-3xl: 6rem;
+  --space-4xl: 8rem;
+  --content-max: 40rem;
+  --page-max: 72rem;
+  --border-thin: 1px solid var(--color-grid-line);
+  --border-strong: 1px solid var(--color-border);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  width: 100%;
+  max-width: 100%;
+  /* Avoid horizontal scroll when children use `100vw` (vw includes scrollbar gutter; % does not). */
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-border);
+  outline-offset: 3px;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+iframe {
+  max-width: 100%;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  min-height: 100%;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 3.2vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: var(--border-strong);
+}
+
+@media (max-width: 40rem) {
+  .section-title {
+    margin-bottom: var(--space-sm);
+    padding-bottom: var(--space-xs);
+  }
+}
