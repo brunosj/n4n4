@@ -38,6 +38,9 @@ const {
 
 <div class="home">
   <section class="home__stage" aria-label="Introduction" style={heroBgStyle}>
+      <div class="home__title-row">
+        <h1 class="home__title">{siteTitle}</h1>
+      </div>
     {
       logoUrl ? (
         <div class="home__logo-wrap">
@@ -53,9 +56,6 @@ const {
         </div>
       ) : null
     }
-    <div class="home__title-row">
-      <h1 class="home__title">{siteTitle}</h1>
-    </div>
     {
       press ? (
         <div class="home__press-wrap">
