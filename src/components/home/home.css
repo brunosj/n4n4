@@ -341,11 +341,12 @@
 .home__contact-prose {
   font-family: var(--font-body);
   font-size: clamp(3.25rem, 9.5vw, 6.25rem);
-  line-height: 1.12;
+  line-height: 0.9;
   text-align: left;
   overflow-wrap: anywhere;
   word-break: break-word;
   opacity: 0;
+  margin-top: 0.75rem;
   transform: translateY(1.5rem);
   animation: home-fade-up 900ms ease-out 200ms forwards;
 }
@@ -372,6 +373,7 @@
 .home__contact-prose a {
   color: #fff;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .home__contact-prose a:hover {
