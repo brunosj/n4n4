@@ -80,11 +80,11 @@
   max-width: 100%;
   min-width: 0;
   margin-bottom: var(--space-2xl);
-  padding-top: var(--space-sm);
+  padding-top: var(--space-2xl);
   padding-bottom: 0;
   box-sizing: border-box;
   opacity: 0;
-  animation: home-fade-in 900ms ease-out 175ms forwards;
+  animation: home-fade-in 900ms ease-out 75ms forwards;
 }
 
 .home__logo {
@@ -128,7 +128,7 @@
   background: rgba(100, 118, 142, 0.2);
   border-radius: 4px;
   opacity: 0;
-  animation: home-fade-in 900ms ease-out 350ms forwards;
+  animation: home-fade-in 900ms ease-out 250ms forwards;
 }
 
 .home__press {
