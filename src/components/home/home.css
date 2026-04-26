@@ -20,6 +20,8 @@
   background-color: var(--color-bg);
   /* --home-title-pad: clamp(var(--space-xs), 2vw, var(--space-md)); */
   --home-content-pad: clamp(var(--space-sm), 4vw, var(--space-xl));
+  /* Logo → album and album → press share one rhythm. */
+  --home-album-logo-press-gap: var(--space-3xl);
   /* Album ↔ video and video ↔ contact use the same gap (narrow screens override below). */
   --home-media-stack-gap: calc(var(--space-4xl) * 2);
   background-size: cover;
@@ -54,19 +56,6 @@
   display: flow-root;
 }
 
-.home__stage:has(.home__video-stack) .home__album-wrap,
-.home__stage:has(.home__video-stack) .home__album-html {
-  margin-bottom: var(--home-media-stack-gap);
-}
-
-/* Desktop: same gap press→album and album→contact when there is no video (both use 3xl). */
-@media (min-width: 40.0625rem) {
-  .home__stage:not(:has(.home__video-stack)) .home__album-wrap,
-  .home__stage:not(:has(.home__video-stack)) .home__album-html {
-    margin-bottom: calc(var(--space-3xl) * 2);
-  }
-}
-
 .home__video-stack {
   padding-bottom: var(--home-media-stack-gap);
   width: 100%;
@@ -79,7 +68,7 @@
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--home-album-logo-press-gap);
   padding-top: var(--space-2xl);
   padding-bottom: 0;
   box-sizing: border-box;
@@ -125,7 +114,7 @@
   margin: 0 auto calc(var(--space-3xl) * 2);
   padding: 0;
   box-sizing: border-box;
-  background: rgba(100, 118, 142, 0.2);
+  background: rgba(100, 118, 142, 0.4);
   border-radius: 4px;
   opacity: 0;
   animation: home-fade-in 900ms ease-out 250ms forwards;
@@ -147,7 +136,7 @@
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  margin: 0 auto calc(var(--space-xl) * 2);
+  margin: 0 auto var(--home-album-logo-press-gap);
   border: var(--border-strong);
   border-radius: 24px;
   overflow: visible;
@@ -162,7 +151,7 @@
 }
 
 .home__album-html {
-  margin: 0 auto calc(var(--space-xl) * 2);
+  margin: 0 auto var(--home-album-logo-press-gap);
   width: 100%;
   max-width: 100%;
   min-width: 0;
@@ -420,11 +409,6 @@
 
   .home__press {
     font-size: clamp(1rem, 4.2vw, 1.65rem);
-  }
-
-  .home__album-wrap,
-  .home__album-html {
-    margin-bottom: calc(var(--space-xl) * 2);
   }
 
   .home__video-stack {
